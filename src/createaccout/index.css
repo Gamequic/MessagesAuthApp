@@ -53,7 +53,7 @@ a{
 
 .card{
     width: 300px;
-    height: 400px;
+    height: 350px;
     background-color: var(--green);
     border-radius: 20px;
     box-shadow: 9px 10px 11px -4px rgba(0,0,0,0.48);
