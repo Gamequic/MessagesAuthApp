@@ -137,6 +137,7 @@ box-shadow: 5px 5px 18px -11px rgba(0,0,0,0.75);
 }
 
 .scroll-container {
+    width: 400px;
     margin-right: auto;
     height: 84vh;
     overflow: auto;
@@ -145,8 +146,8 @@ box-shadow: 5px 5px 18px -11px rgba(0,0,0,0.75);
 .contacts-list li{
     background-color: var(--green);
     border-radius: 20px;
+    width: 200px;
     padding: 10px;
-    margin: 20px;
     display: flex;
 }
 
@@ -165,14 +166,22 @@ box-shadow: 5px 5px 18px -11px rgba(0,0,0,0.75);
     margin-top: 20px;
 }
 
-.messages-container{
+.chat{
     width: 100%;
     margin-top: auto;
     height: 84vh;
+}
+
+.send{
+    
+}
+
+.messages-container{
     overflow: auto;
 }
 
 .messages{
+    margin: 10px ;
     display: flex;
     flex-direction: column;
 }
@@ -201,8 +210,9 @@ box-shadow: 5px 5px 18px -11px rgba(0,0,0,0.75);
     border-radius: 5px;
 }
 
-#Time{
-    font-size: 1;
+.time{
+    font-size: x-small;
+    margin-top: auto;
 }
 
 .me{

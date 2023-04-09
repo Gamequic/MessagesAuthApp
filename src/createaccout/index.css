@@ -53,7 +53,7 @@ a{
 
 .card{
     width: 300px;
-    height: 350px;
+    height: 525px;
     background-color: var(--green);
     border-radius: 20px;
     box-shadow: 9px 10px 11px -4px rgba(0,0,0,0.48);
@@ -108,6 +108,22 @@ box-shadow: 5px 5px 18px -11px rgba(0,0,0,0.75);
     -webkit-box-shadow: inset 5px 5px 18px -11px rgba(0,0,0,0.75);
     -moz-box-shadow: inset 5px 5px 18px -11px rgba(0,0,0,0.75);
     box-shadow: inset 5px 5px 18px -11px rgba(0,0,0,0.75);
+}
+
+
+.userphoto{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.userphoto img{
+    margin: 10px;
+    width: 100px;
+}
+
+.userphoto button{
+    width: 200px;
 }
 
 .password-container{
