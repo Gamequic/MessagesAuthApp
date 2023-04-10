@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "boom": "^7.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "install": "^0.13.0",
+    "joi": "^17.9.1",
+    "path": "^0.12.7",
+    "pg": "^8.10.0",
+    "sequelize": "^6.31.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.0"
+  },
+  "name": "authapp",
+  "description": "Una aplicación para enviar mensajes con inicio de secion aplicado.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gamequic/MessagesAuthApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gamequic/MessagesAuthApp/issues"
+  },
+  "homepage": "https://github.com/Gamequic/MessagesAuthApp#readme"
+}
