@@ -1,8 +1,9 @@
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt')
+const nodemailer = require("nodemailer");
 
 const { models } = require('../libs/sequelize');
-const { config } = require('./../config/config')
+const { config } = require('../config/config')
 
 class UserService {
   constructor() {}
@@ -42,6 +43,10 @@ class UserService {
     const user = await this.findOne(id);
     await user.destroy();
     return { id };
+  }
+
+  async resetPassword() {
+
   }
 }
 
