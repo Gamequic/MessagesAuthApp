@@ -45,8 +45,35 @@ class UserService {
     return { id };
   }
 
-  async resetPassword() {
+  async sendMail() {
+    let testAccount = await nodemailer.createTestAccount();
 
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: "demiancalleros1@gmail.com",
+        pass: "apohwrseoxukkxjx",
+      },
+    });
+
+    let info = await transporter.sendMail({
+      from: '"Fred Foo 👻" <demiancalleros1@gmail.com>',
+      to: "demiancalleros1@gmail.com", // list of receivers
+      subject: "Hello ✔", // Subject line
+      text: "Hello world?", // plain text body
+      html: "<b>Hello world?</b>", // html body
+    });
+  }
+
+  async passwordReset(email){
+    const usuarioEncontrado = await models.User.findOne({
+      where: {
+        email: email
+      }
+    });
+    
   }
 }
 

@@ -105,5 +105,15 @@ router.post("/upload-profilephoto/:id",
   }
 );
 
+router.post("/resetpassword",
+  async (req, res, next) => {
+    try {
+      service.passwordReset('demiancalleros0@gmail.comm')
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 module.exports = router;

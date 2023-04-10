@@ -6,7 +6,7 @@ const config = {
   port: process.env.PORT || 3000,
   dbUrl: process.env.DATABASE_URL,
   saltRounds: process.env.SALTROUNDS,
-  authSecret: procces.env.AUTHSECRET,
+  authSecret: process.env.AUTHSECRET,
   messageSecret: process.env.MESSAGESECRET
 }
 
