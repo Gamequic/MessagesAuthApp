@@ -5,6 +5,7 @@ const config = {
   isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   dbUrl: process.env.DATABASE_URL,
+  saltRounds: process.env.SALTROUNDS, 
 }
 
 module.exports = { config };

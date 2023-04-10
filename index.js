@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   res.send('Hello world');
 });
 
-// routerApi(app);
+routerApi(app);
 
 app.use(logErrors);
 app.use(ormErrorHandler);
