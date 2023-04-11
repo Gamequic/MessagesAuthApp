@@ -115,14 +115,13 @@ class UserService {
     }, config.authSecret, { expiresIn: 900 });
 
     //Enviar email
-    // return await this.sendMail({
-    //   from: '"Password reset" <demiancalleros1@gmail.com>',
-    //   to: email,
-    //   subject: "Password reset",
-    //   text: `The token is: ${token}\n\nThis would be prettier in the future. The token is expiring in 15 minutes`,
-    //  html: "", 
-    // });
-    return {token: token}
+    return await this.sendMail({
+      from: '"Password reset" <demiancalleros1@gmail.com>',
+      to: email,
+      subject: "Password reset",
+      text: `The token is: ${token}\n\nThis would be prettier in the future. The token is expiring in 15 minutes`,
+     html: "", 
+    });
   }
 
   async applyPasswordReset(token, password){
