@@ -3,7 +3,7 @@ const path = require("path");
 const boom = require('@hapi/boom')
 
 const validationHandler = require('../middlewares/validator.handler');
-const { createUserSchema, updateUserSchema, getUserSchema } = require('../schemas/user.schema');
+const { createUserSchema, updateUserSchema, getUserSchema, askPasswordReset, applyPasswordReset } = require('../schemas/user.schema');
 const UserService = require('../services/user.service')
 
 const router = express.Router();
@@ -83,15 +83,32 @@ router.post("/upload-profilephoto/:id",
   }
 );
 
-router.post("/resetpassword",
+router.post("/askresetpassword",
+  validationHandler(askPasswordReset, 'body'),
   async (req, res, next) => {
     try {
-      service.passwordReset('demiancalleros0@gmail.comm')
+      const { email } = req.body;
+      user = await service.askPasswordReset(email)
+      res.status(201).json({user: user})
     } catch (error) {
       next(error);
     }
   }
 );
+
+router.post("/resetpassword",
+  validationHandler(applyPasswordReset, 'body'),
+  async (req, res, next) => {
+    try {
+      const { password, token } = req.body;
+      user = await service.applyPasswordReset(token, password)
+      res.status(201).json({user: user})
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 
 
 module.exports = router;

@@ -7,7 +7,10 @@ const config = {
   dbUrl: process.env.DATABASE_URL,
   saltRounds: process.env.SALTROUNDS,
   authSecret: process.env.AUTHSECRET,
-  messageSecret: process.env.MESSAGESECRET
+  messageSecret: process.env.MESSAGESECRET,
+  emailService: process.env.EMAILSERVICE,
+  email: process.env.EMAIL,
+  emailpassword: process.env.EMAILPASSWORD
 }
 
 module.exports = { config };

@@ -18,6 +18,22 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING
   },
+  name: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: undefined,
+  },
+  lastname: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: undefined,
+  },
+  username: {
+    unique: true,
+    allowNull: true,
+    type: DataTypes.STRING,
+    defaultValue: undefined,
+  },
   descripcion: {
     allowNull: true,
     type: DataTypes.STRING,

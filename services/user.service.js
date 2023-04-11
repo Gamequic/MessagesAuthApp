@@ -1,7 +1,7 @@
 const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt')
 const nodemailer = require("nodemailer");
-
+const jwt = require('jsonwebtoken');
 
 const { models } = require('../libs/sequelize');
 const { config } = require('../config/config')
@@ -15,7 +15,6 @@ class UserService {
       password: bcrypt.hashSync(data.password, parseInt(config.saltRounds))
     });
     delete newUser.dataValues.password
-    console.log(newUser)
     return newUser;
   }
 
@@ -25,7 +24,6 @@ class UserService {
   }
 
   async findOne(id) {
-    console.log(id)
     const user = await models.User.findByPk(id);
     if (!user) {
       throw boom.notFound('user not found');
@@ -74,32 +72,73 @@ class UserService {
   }
 
   async sendMail(email) {
-    const mail = email || await transporter.sendMail({
+
+    var mail = email || {
       from: '"Development email" <demiancalleros1@gmail.com>',
       to: "demiancalleros1@gmail.com",
       subject: "This is a development email",
       text: "",
       html: "", 
-    })
+    }
 
     let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
+      host: config.emailService,
       port: 465,
       secure: true,
       auth: {
-        user: "demiancalleros1@gmail.com",
-        pass: "apohwrseoxukkxjx",   //Password delete don't try
+        user: config.email,
+        pass: config.emailpassword,
       },
     });
+
+    return await transporter.sendMail(mail)
   }
 
-  async passwordReset(email){
-    const usuarioEncontrado = await models.User.findOne({
+  async askPasswordReset(email){
+    //Probar que el usuario exista
+    const user = await models.User.findOne({
       where: {
         email: email
       }
     });
-    
+    if (!user) {
+      throw boom.notFound()
+    }
+    delete user.dataValues.password;
+
+    //Generar token
+    const token = jwt.sign({
+      id: user.dataValues.id,
+      email: user.dataValues.email,
+      name: `${user.dataValues.name} ${user.dataValues.lastname}`,
+      descripcion: user.dataValues.descripcion
+    }, config.authSecret, { expiresIn: 900 });
+
+    //Enviar email
+    // return await this.sendMail({
+    //   from: '"Password reset" <demiancalleros1@gmail.com>',
+    //   to: email,
+    //   subject: "Password reset",
+    //   text: `The token is: ${token}\n\nThis would be prettier in the future. The token is expiring in 15 minutes`,
+    //  html: "", 
+    // });
+    return {token: token}
+  }
+
+  async applyPasswordReset(token, password){
+    return new Promise((resolve, reject) => {
+      //Verificar token
+      jwt.verify(token, config.authSecret, async (err, decoded) => {
+        if (err) {
+          reject(boom.unauthorized("The token is not valid"));
+        } else {
+          //Actualizar contraseña
+          const user = await this.update(decoded.id, {password: bcrypt.hashSync(password, parseInt(config.saltRounds))});
+          delete user.dataValues.password;
+          resolve(user);
+        }
+      });
+    });
   }
 }
 
