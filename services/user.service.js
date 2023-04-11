@@ -2,6 +2,7 @@ const boom = require('@hapi/boom');
 const bcrypt = require('bcrypt')
 const nodemailer = require("nodemailer");
 
+
 const { models } = require('../libs/sequelize');
 const { config } = require('../config/config')
 
@@ -45,25 +46,50 @@ class UserService {
     return { id };
   }
 
-  async sendMail() {
-    let testAccount = await nodemailer.createTestAccount();
+  async uploadPhoto(photo, id){
+    //Conseguir usuario
+    const user = await this.findOne(id);
+    delete user.dataValues.password;
+    
+    //Confirmar foto y formato
+    if (!photo) {
+      throw boom.badRequest('No files were uploaded.')
+    }
+    if (!(photo.name.substring(photo.name.length - 4) === '.png')) {
+      throw boom.badRequest('Only png files.')
+    }
+    
+    //Mover la foto a la carpeta publica
+    const path = __dirname + "/../public/" + `profilePhoto${id}.png`;
+    photo.mv(path, (err) => {
+      if (err) {
+        throw boom.internal(err)
+      }
+    });
+
+    //Aplicar la foto al usuario
+    return await this.update(id, {
+      photo: `http://localhost:3000/public/profilePhoto${id}.png`
+    })
+  }
+
+  async sendMail(email) {
+    const mail = email || await transporter.sendMail({
+      from: '"Development email" <demiancalleros1@gmail.com>',
+      to: "demiancalleros1@gmail.com",
+      subject: "This is a development email",
+      text: "",
+      html: "", 
+    })
 
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // true for 465, false for other ports
+      port: 465,
+      secure: true,
       auth: {
         user: "demiancalleros1@gmail.com",
-        pass: "apohwrseoxukkxjx",
+        pass: "apohwrseoxukkxjx",   //Password delete don't try
       },
-    });
-
-    let info = await transporter.sendMail({
-      from: '"Fred Foo 👻" <demiancalleros1@gmail.com>',
-      to: "demiancalleros1@gmail.com", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>", // html body
     });
   }
 

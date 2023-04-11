@@ -73,32 +73,10 @@ router.post("/upload-profilephoto/:id",
   validationHandler(getUserSchema, 'params'),
   async (req, res, next) => {
     try {
-      //Conseguir parametros
       const { id } = req.params;
-      const user = await service.findOne(id);
-      delete user.dataValues.password;
-      
-      //Confirmar foto y formato
-      if (!req.files.myFile) {
-        throw boom.badRequest('No files were uploaded.')
-      }
-      if (!(req.files.myFile.name.substring(req.files.myFile.name.length - 4) === '.png')) {
-        throw boom.badRequest('Only png files.')
-      }
-      
-      //Mover la foto a la carpeta publica
-      const file = req.files.myFile;
-      const path = __dirname + "/../public/" + `profilePhoto${id}.png`;
-      file.mv(path, (err) => {
-        if (err) {
-          throw boom.internal(err)
-        }
-      });
-
-      //Aplicar la foto al usuario y contenstar solicitud
-      res.status(201).json(await service.update(id, {
-        photo: `http://localhost:3000/public/profilePhoto${id}.png`
-      }));
+      const profilePhoto = req.files.profilePhoto
+      const user = await service.uploadPhoto(profilePhoto, id);
+      res.status(201).json(user);
     } catch (error) {
       next(error);
     }
