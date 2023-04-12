@@ -42,8 +42,13 @@ const applyPasswordReset = Joi.object({
   token: token.required()
 });
 
+const login = Joi.object({
+  password: password.required(),
+  email: email.required()
+});
+
 const getUserSchema = Joi.object({
   id: id.required(),
 });
 
-module.exports = { createUserSchema, updateUserSchema, getUserSchema, askPasswordReset, applyPasswordReset }
+module.exports = { createUserSchema, updateUserSchema, getUserSchema, askPasswordReset, applyPasswordReset, login }

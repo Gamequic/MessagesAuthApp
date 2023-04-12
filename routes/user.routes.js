@@ -3,22 +3,26 @@ const path = require("path");
 const boom = require('@hapi/boom')
 
 const validationHandler = require('../middlewares/validator.handler');
-const { createUserSchema, updateUserSchema, getUserSchema, askPasswordReset, applyPasswordReset } = require('../schemas/user.schema');
+const { createUserSchema, updateUserSchema, getUserSchema, askPasswordReset, applyPasswordReset, login } = require('../schemas/user.schema');
 const UserService = require('../services/user.service')
+const { authentication, authenticationToSelf} = require('./../middlewares/auth.handler')
 
 const router = express.Router();
 const service = new UserService();
 
-router.get('/',  async (req, res, next) => {
-  try {
-    res.json(await service.find());
-  } catch (error) {
-    next(error);
-  }
+router.get('/',
+  authentication,
+  async (req, res, next) => {
+    try {
+      res.json(await service.find());
+    } catch (error) {
+      next(error);
+    }
 });
 
 router.get('/:id',
   validationHandler(getUserSchema, 'params'),
+  authentication,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -46,10 +50,13 @@ router.post('/',
 router.patch('/:id',
   validationHandler(getUserSchema, 'params'),
   validationHandler(updateUserSchema, 'body'),
+  authentication,
+  authenticationToSelf,
   async (req, res, next) => {
     try {
       const { id } = req.params;
       const body = req.body;
+      console.log(req)
       res.status(201).json(await service.update(id, body));
     } catch (error) {
       next(error);
@@ -59,6 +66,8 @@ router.patch('/:id',
 
 router.delete('/:id',
   validationHandler(getUserSchema, 'params'),
+  authentication,
+  authenticationToSelf,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -71,6 +80,8 @@ router.delete('/:id',
 
 router.post("/upload-profilephoto/:id",
   validationHandler(getUserSchema, 'params'),
+  authentication,
+  authenticationToSelf,
   async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -109,6 +120,18 @@ router.post("/resetpassword",
   }
 );
 
-
+router.post("/login",
+  validationHandler(login, 'body'),
+  async (req, res, next) => {
+    try {
+      const { password, email } = req.body;
+      console.log(email, password)
+      token = await service.logIn(email, password)
+      res.status(201).json({token: token})
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 module.exports = router;

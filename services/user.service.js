@@ -102,7 +102,7 @@ class UserService {
       }
     });
     if (!user) {
-      throw boom.notFound()
+      throw boom.notFound("User not found")
     }
     delete user.dataValues.password;
 
@@ -138,6 +138,34 @@ class UserService {
         }
       });
     });
+  }
+
+  async logIn(email, password){
+    //Probar que el usuario exista
+    const user = await models.User.findOne({
+      where: {
+        email: email
+      }
+    });
+    if (!user) {
+      throw boom.notFound("User not found")
+    }
+    
+    //Comprobar contraseña
+    const result = await bcrypt.compare(password, user.dataValues.password);
+    if (!result){  //Contraseña incorrecta
+      throw boom.unauthorized("Password is wrong")
+    }
+
+    //Generar token
+    const token = await jwt.sign({
+      id: user.dataValues.id,
+      email: user.dataValues.email,
+      name: `${user.dataValues.name} ${user.dataValues.lastname}`,
+      descripcion: user.dataValues.descripcion
+    }, config.authSecret, { expiresIn: 1800 }); //30 min
+
+    return token
   }
 }
 
