@@ -1,5 +1,32 @@
 const showPasswordButton = document.getElementById('BTshow-password');
 const passwordInput = document.getElementById('password');
+const LogInBT = document.getElementById('LogInBT');
+const emailInput = document.getElementById('emailInput');
+
+const url = 'http://localhost:3000/api/v1/users/login'
+
+emailInput.value = 'demiancalleros0@gmail.com'
+passwordInput.value = '123456789'
+
+LogInBT.addEventListener('click', async () => {
+    email = emailInput.value;
+    password = passwordInput.value;
+    rta = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+                email,
+                password
+            })
+    })
+    const data = await rta.json();
+
+    localStorage.setItem('token', data.token);
+
+    window.location.href='/src/home/'
+})
 
 showPasswordButton.addEventListener('click', function() {
     if (passwordInput.type === 'password') {
