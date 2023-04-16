@@ -117,13 +117,15 @@ class UserService {
     }, config.authSecret, { expiresIn: 900 });
 
     //Enviar email
-    return await this.sendMail({
+    const mail =  await this.sendMail({
       from: '"Password reset" <demiancalleros1@gmail.com>',
       to: email,
       subject: "Password reset",
-      text: `The token is: ${token}\n\nThis would be prettier in the future. The token is expiring in 15 minutes`,
-     html: "", 
+      text: ``,
+      html: `<a href='http://127.0.0.1:5500/src/passwordreset/?token=${token}'>Recover password<a>`, 
     });
+
+    return "Email sent"
   }
 
   async applyPasswordReset(token, password){
@@ -167,7 +169,7 @@ class UserService {
       descripcion: user.dataValues.descripcion
     }, config.authSecret, { expiresIn: 1800 }); //30 min
 
-    return token
+    return {token, statusCode: 202}
   }
 }
 

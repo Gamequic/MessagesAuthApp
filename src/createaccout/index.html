@@ -20,20 +20,36 @@
         </header>
         <div class="background center">
             <div class="card">
-                <div class="userphoto">
-                    <img src="../icons/user-default.svg">
-                    <button class="style-button">Uplaod photo</button>
+                <div class="horizontal">
+                    <div class="vertical">
+                        <p>Username</p>
+                        <input id="username">
+                        <p>Name</p>
+                        <input id="name">
+                        <p>Lastname</p>
+                        <input id="lastname">
+                        <p>Descricion</p>
+                        <input id="descricion">
+                    </div>
+                    <div class="vertical">
+                        <div class="userphoto">
+                            <img id="photo" src="../icons/user-default.svg">
+                            <input type="File" id="photoFileInput" style="display:none;">
+                            <button class="style-button" id="photoUploadButton">Cargar imagen</button>
+                        </div>
+                        <p>Email</p>
+                        <input id="email">
+                        <p>Password</p>
+                        <div class="password-container">
+                            <input type="password" id="password">
+                            <img src="../icons/show.svg" id="BTshow-password">
+                        </div>
+                        <p>Confirm password</p>
+                        <input type="password" id="password-confirm">
+                    </div>
                 </div>
-                <p>Email</p>
-                <input>
-                <p>Password</p>
-                <div class="password-container">
-                    <input type="password" id="password">
-                    <img src="../icons/show.svg" id="BTshow-password">
-                </div>
-                <p>Confirm password</p>
-                <input type="password" id="password-confirm">
-                <button class="style-button">Create accout</button>
+                <p id="info"></p>
+                <button id="createBT" class="style-button">Create accout</button>
                 <a href="/src/login/">Alredy have an accout?</a>
             </div>
         </div>

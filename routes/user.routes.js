@@ -99,8 +99,8 @@ router.post("/askresetpassword",
   async (req, res, next) => {
     try {
       const { email } = req.body;
-      user = await service.askPasswordReset(email)
-      res.status(201).json({user: user})
+      rta = await service.askPasswordReset(email)
+      res.status(201).json({rta})
     } catch (error) {
       next(error);
     }
@@ -127,7 +127,7 @@ router.post("/login",
       const { password, email } = req.body;
       console.log(email, password)
       token = await service.logIn(email, password)
-      res.status(201).json({token: token})
+      res.status(201).json(token)
     } catch (error) {
       next(error);
     }

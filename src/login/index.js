@@ -2,6 +2,7 @@ const showPasswordButton = document.getElementById('BTshow-password');
 const passwordInput = document.getElementById('password');
 const LogInBT = document.getElementById('LogInBT');
 const emailInput = document.getElementById('emailInput');
+const info = document.getElementById('info')
 
 const url = 'http://localhost:3000/api/v1/users/login'
 
@@ -23,8 +24,12 @@ LogInBT.addEventListener('click', async () => {
     })
     const data = await rta.json();
 
-    localStorage.setItem('token', data.token);
+    if (data.statusCode === 401){   //Unauthorized
+        info.textContent = 'No account was found'
+        return 0
+    }
 
+    localStorage.setItem('token', data.token);
     window.location.href='/src/home/'
 })
 
