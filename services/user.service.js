@@ -6,6 +6,17 @@ const jwt = require('jsonwebtoken');
 const { models } = require('../libs/sequelize');
 const { config } = require('../config/config')
 
+// models.Messages.create({
+//   senderId: 1,
+//   conversationId: 1,
+//   content: "Hello"
+// })
+
+async function a(){
+  let rta = await models.Messages.findAll()
+  console.log(rta)
+}
+//a()
 class UserService {
   constructor() {}
 
@@ -18,7 +29,6 @@ class UserService {
       result += characters[index];
     }
 
-    console.log(result, typeof(result))
     return result
   }
 

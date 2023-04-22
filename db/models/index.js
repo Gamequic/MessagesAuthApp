@@ -1,13 +1,13 @@
 const { UserSchema, User } = require('./auth.model')
 const { MessagesSchema, Message } = require('./messages.model')
-const { ConversationsSchema, Conversations } = require('./conversations.model')
+const { ConversationsSchema, Conversation } = require('./conversations.model')
 
 function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize))
   Message.init(MessagesSchema, Message.config(sequelize))
-  Conversations.init(ConversationsSchema, Conversations.config(sequelize))
+  Conversation.init(ConversationsSchema, Conversation.config(sequelize))
 
-  Conversations.associate(sequelize.models);
+  Conversation.associate(sequelize.models);
   // Customer.associate(sequelize.models);
   // Category.associate(sequelize.models);
   // Product.associate(sequelize.models);

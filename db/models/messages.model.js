@@ -9,7 +9,12 @@ const MessagesSchema = {
     autoIncrement: true,
     type: DataTypes.INTEGER
   },
-  converstaionId: {
+  senderId: {
+    allowNull: false,
+    primaryKey: true,
+    type: DataTypes.INTEGER
+  },
+  conversationId: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.INTEGER
