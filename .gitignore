@@ -1,3 +1,6 @@
+public/*.png
+migrations/
+
 # Logs
 logs
 *.log

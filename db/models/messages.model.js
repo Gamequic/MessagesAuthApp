@@ -14,7 +14,7 @@ const MessagesSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
-  conversationId: {
+  receiverId: {
     allowNull: false,
     primaryKey: true,
     type: DataTypes.INTEGER
@@ -33,6 +33,20 @@ const MessagesSchema = {
 }
 
 class Message extends Model {
+  static associate(models) {
+    this.belongsTo(models.User, {
+      foreignKey: 'senderId',
+      targetKey: 'id',
+      as: "senderUser"
+    })
+
+    this.belongsTo(models.User, {
+      foreignKey: 'receiverId',
+      targetKey: 'id',
+      as: "receiverUser"
+    })
+  }
+
   static config(sequelize) {
     return {
       sequelize,
