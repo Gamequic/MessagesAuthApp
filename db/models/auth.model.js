@@ -9,6 +9,11 @@ const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER
   },
+  crypt: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    default: undefined
+  },
   email: {
     allowNull: false,
     type: DataTypes.STRING,
@@ -58,6 +63,9 @@ const UserSchema = {
 }
 
 class User extends Model {
+  static associate(models) {
+  }
+
   static config(sequelize) {
     return {
       sequelize,

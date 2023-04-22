@@ -9,10 +9,23 @@ const { config } = require('../config/config')
 class UserService {
   constructor() {}
 
+  async createRandomCharacter(){
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    let result = "";
+
+    for (let i = 0; i < 10; i++) {
+      const index = Math.floor(Math.random() * characters.length);
+      result += characters[index];
+    }
+
+    return result
+  }
+
   async create(data) {
     const newUser = await models.User.create({
       ...data,
-      password: bcrypt.hashSync(data.password, parseInt(config.saltRounds))
+      password: bcrypt.hashSync(data.password, parseInt(config.saltRounds)),
+      crypt: this.createRandomCharacter()
     });
     delete newUser.dataValues.password
     return newUser;

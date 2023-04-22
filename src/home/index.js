@@ -12,6 +12,10 @@ async function main() {
         }
     });
     const data = await rta.json()
+    
+    if (data.statusCode === 401) {
+        window.location.href = '/src/login';
+    }
 
     for (let i in data){
         contactsList.innerHTML = contactsList.innerHTML + `<li>\n<img src="${data[i].photo}">\n<p class="name">${data[i].name} ${data[i].lastname}</p>\n</li>`

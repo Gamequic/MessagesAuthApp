@@ -24,22 +24,13 @@ app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }))
 
-const whitelist = ['http://localhost:5500', 'https://myapp.co'];
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('no permitido'));
-    }
-  }
-}
 app.use(cors({
-  origin: 'http://127.0.0.1:5500'
+  origin: 'http://localhost:5500',
+  optionsSuccessStatus: 200
 }));
 
 app.get('/', (req, res) => {
-  res.send('Hello world');
+  res.send('Online');
 });
 
 routerApi(app);
