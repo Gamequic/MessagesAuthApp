@@ -24,16 +24,15 @@ app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }))
 
-app.use(cors({
-  origin: 'http://localhost:5500',
-  optionsSuccessStatus: 200
-}));
+const corsOptions = {
+  origin: ['http://127.0.0.1:5500', 'http://localhost:5500']
+}
 
 app.get('/', (req, res) => {
   res.send('Online');
 });
 
-routerApi(app);
+routerApi(app, corsOptions);
 
 app.use(logErrors);
 app.use(ormErrorHandler);

@@ -18,14 +18,15 @@ class UserService {
       result += characters[index];
     }
 
+    console.log(result, typeof(result))
     return result
   }
 
   async create(data) {
     const newUser = await models.User.create({
       ...data,
-      password: bcrypt.hashSync(data.password, parseInt(config.saltRounds)),
-      crypt: this.createRandomCharacter()
+      password: await bcrypt.hashSync(data.password, parseInt(config.saltRounds)),
+      crypt: await this.createRandomCharacter()
     });
     delete newUser.dataValues.password
     return newUser;
