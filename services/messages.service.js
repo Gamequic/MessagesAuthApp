@@ -1,48 +1,70 @@
+const { Op } = require('sequelize');
 const boom = require('@hapi/boom');
-const bcrypt = require('bcrypt')
+const CryptoJS = require('crypto-js')
 
+const UserService = require('../services/user.service')
 const { models } = require('../libs/sequelize');
 const { config } = require('../config/config')
 
-class UserService {
+const userService = new UserService();
+
+//const contentDecryt = CryptoJS.AES.decrypt(contentEncrypt, secretKey).toString(CryptoJS.enc.Utf8)
+
+class MessageService {
     constructor() {}
 
-    async create(data) {
-        const newUser = await models.Messages.create({
-            
+    async create(senderId, data) {
+        const senderUser = await userService.findOne(senderId)
+        const receiverUser = await userService.findOne(data.receiverId)
+
+        const secretKey = `${senderUser.crypt}${config.messageSecret}${receiverUser.crypt}`
+        delete data.content
+        const contentEncrypt = await CryptoJS.AES.encrypt(data.content, secretKey).toString()
+
+        const newMessage = await models.Messages.create({
+            ...data,
+            senderId,
+            content: contentEncrypt
         });
-        delete newUser.dataValues.password
-        return newUser;
+        return newMessage;
     }
 
-    async find() {
-        const rta = await models.User.findAll({
-            attributes: { exclude: ['password'] }
-        });
-        return rta;
+    async findMessages(senderId, receiverId) {  
+        const messages = await models.Messages.findAll({
+            where: {
+            [Op.or]: [
+                { senderId: senderId, receiverId: receiverId },
+                { senderId: receiverId, receiverId: senderId },
+            ],
+            },
+        });       
+        return messages;
     }
 
-    async findOne(id) {
-        const user = await models.User.findByPk(id);
-        if (!user) {
-            throw boom.notFound('user not found');
+    async findOne(msgId, userId) {
+        const message = await models.Messages.findByPk(msgId);
+        if (!message) {
+            throw boom.notFound('Message not found');
         }
-        delete user.dataValues.password
-        return user;
+        console.log((message.senderId === userId || message.receiverId === userId))
+        if (!(message.senderId === userId || message.receiverId === userId)){
+            throw boom.unauthorized("Unauthorized")
+        }
+        return message;
     }
 
     async update(id, changes) {
-        const user = await this.findOne(id);
-        const rta = await user.update(changes);
+        const message = await this.findOne(msgId, userId);
+        const rta = await message.update(changes);
         return rta;
     }
 
-    async delete(id) {
-        const user = await this.findOne(id);
-        await user.destroy();
-        return { id };
+    async delete(msgId, userId) {
+        const message = await this.findOne(msgId, userId);
+        await message.destroy();
+        return { msgId, userId };
     }
 
 }
 
-module.exports = UserService;
+module.exports = MessageService;

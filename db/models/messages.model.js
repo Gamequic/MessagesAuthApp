@@ -11,12 +11,10 @@ const MessagesSchema = {
   },
   senderId: {
     allowNull: false,
-    primaryKey: true,
     type: DataTypes.INTEGER
   },
   receiverId: {
     allowNull: false,
-    primaryKey: true,
     type: DataTypes.INTEGER
   },
   content: {
