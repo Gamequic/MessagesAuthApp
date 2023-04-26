@@ -56,7 +56,6 @@ router.patch('/:id',
     try {
       const { id } = req.params;
       const body = req.body;
-      console.log(req)
       res.status(201).json(await service.update(id, body));
     } catch (error) {
       next(error);
@@ -125,7 +124,6 @@ router.post("/login",
   async (req, res, next) => {
     try {
       const { password, email } = req.body;
-      console.log(email, password)
       token = await service.logIn(email, password)
       res.status(201).json(token)
     } catch (error) {

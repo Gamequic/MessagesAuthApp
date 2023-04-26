@@ -9,6 +9,7 @@ const name = Joi.string();
 const lastname = Joi.string();
 const username = Joi.string();
 const photo = Joi.string();
+const hexaColor = Joi.string();
 const token = Joi.string().min(10)
 
 const createUserSchema = Joi.object({
@@ -17,6 +18,7 @@ const createUserSchema = Joi.object({
   username: username.required(),
   email: email.required(),
   password: password.required(),
+  hexaColor: hexaColor.required(),
   role: role,
   descripcion: descripcion,
   photo, photo,
@@ -30,6 +32,7 @@ const updateUserSchema = Joi.object({
   password: password,
   role: role,
   descripcion: descripcion,
+  hexaColor,
   photo, photo,
 });
 

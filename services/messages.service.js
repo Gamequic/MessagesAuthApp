@@ -8,8 +8,6 @@ const { config } = require('../config/config')
 
 const userService = new UserService();
 
-//const contentDecryt = CryptoJS.AES.decrypt(contentEncrypt, secretKey).toString(CryptoJS.enc.Utf8)
-
 class MessageService {
     constructor() {}
 
@@ -17,9 +15,9 @@ class MessageService {
         const senderUser = await userService.findOne(senderId)
         const receiverUser = await userService.findOne(data.receiverId)
 
-        const secretKey = `${senderUser.crypt}${config.messageSecret}${receiverUser.crypt}`
+        const secretKey = `${senderUser.crypt}${config.messageSecret}${receiverUser.crypt}`;
+        const contentEncrypt = await CryptoJS.AES.encrypt(data.content, secretKey).toString();
         delete data.content
-        const contentEncrypt = await CryptoJS.AES.encrypt(data.content, secretKey).toString()
 
         const newMessage = await models.Messages.create({
             ...data,
@@ -29,16 +27,37 @@ class MessageService {
         return newMessage;
     }
 
-    async findMessages(senderId, receiverId) {  
+    async findMessages(senderId, receiverId) {
         const messages = await models.Messages.findAll({
             where: {
             [Op.or]: [
                 { senderId: senderId, receiverId: receiverId },
                 { senderId: receiverId, receiverId: senderId },
             ],
-            },
-        });       
-        return messages;
+            }
+        });
+
+        const sender = await userService.findOne(senderId);
+        const receiver = await userService.findOne(receiverId);
+
+        const senderSecretKey = `${sender.dataValues.crypt}${config.messageSecret}${receiver.dataValues.crypt}`
+        const receiverSecretKey = `${receiver.dataValues.crypt}${config.messageSecret}${sender.dataValues.crypt}`
+
+        let decrypMessages = []
+
+        for (let i in messages){
+            if (messages[i].dataValues.senderId === sender.dataValues.id) {
+                var decrypMessage = CryptoJS.AES.decrypt(messages[i].dataValues.content, senderSecretKey).toString(CryptoJS.enc.Utf8);
+            } else {
+                var decrypMessage = CryptoJS.AES.decrypt(messages[i].dataValues.content, receiverSecretKey).toString(CryptoJS.enc.Utf8);
+            }
+            decrypMessages.push({
+                ...messages[i].dataValues,
+                content: decrypMessage
+            });
+        };
+
+        return decrypMessages;
     }
 
     async findOne(msgId, userId) {

@@ -182,7 +182,14 @@ class UserService {
       descripcion: user.dataValues.descripcion
     }, config.authSecret, { expiresIn: 1800 }); //30 min
 
-    return {token, statusCode: 202}
+    delete user.dataValues.password
+
+    const userData = {
+      ...user.dataValues,
+      token
+    }
+
+    return {userData, statusCode: 202}
   }
 }
 

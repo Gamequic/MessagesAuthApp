@@ -52,9 +52,30 @@ header div img{
     background-color: var(--very-light-green);
 }
 
-.contacts-list li img{
+img{
     width: 60px;
+    height: 60px;
     border-radius: 100px;
+    border: 3px solid white;
+}
+
+.infoUser{
+    margin-left: 150px;
+    margin-top: 20px;
+    border-radius: 20px;
+    position: absolute;
+    -webkit-box-shadow: 30px 25px 26px -13px rgba(0,0,0,0.42);
+    -moz-box-shadow: 30px 25px 26px -13px rgba(0,0,0,0.42);
+    box-shadow: 30px 25px 26px -13px rgba(0,0,0,0.42);
+    background-color: var(--strong-green);
+    width: 200px;
+    height: 300px;
+}
+
+.infoUser img{
+    position: relative;
+    top: 25px;
+    left: 70px;
 }
 
 .name{

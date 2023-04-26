@@ -26,10 +26,10 @@ LogInBT.addEventListener('click', async () => {
 
     if (data.statusCode === 401){   //Unauthorized
         info.textContent = 'No account was found'
-        return 0
+        return
     }
 
-    localStorage.setItem('token', data.token);
+    localStorage.setItem('userData', JSON.stringify(data.userData));
     window.location.href='/src/home/'
 })
 

@@ -4,7 +4,6 @@ const boom = require('boom')
 const { config } = require('./../config/config')
 
 function authentication(req, res, next){
-    console.log("a");
     try{ 
         const token = req.headers.authheader;
         const decoded = jwt.verify(token, config.authSecret);

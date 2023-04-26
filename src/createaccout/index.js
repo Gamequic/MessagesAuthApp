@@ -10,6 +10,7 @@ const photo = document.getElementById('photo')
 const fileInput = document.getElementById('photoFileInput')
 const uploadButton = document.getElementById('photoUploadButton')
 const createBT = document.getElementById('createBT')
+const colorSelector = document.getElementById('color-selector')
 const info = document.getElementById('info')
 
 const url = 'http://localhost:3000/api/v1/users'
@@ -24,6 +25,12 @@ showPasswordButton.addEventListener('click', function() {
         passwordConfirmInput.type = 'password';
         showPasswordButton.src = '../icons/show.svg';
     }
+});
+
+var selectedColor = "#ffffff"
+colorSelector.addEventListener('input', (event) => {
+    selectedColor = event.target.value;
+    photo.style.border = `4px solid ${selectedColor}`;
 });
 
 uploadButton.addEventListener('click', () => {
@@ -81,7 +88,8 @@ createBT.addEventListener('click', async () => {
         descripcion,
         name,
         lastname,
-        username
+        username,
+        hexaColor: selectedColor
     }
 
     const rta = await fetch(url, {
@@ -113,9 +121,9 @@ createBT.addEventListener('click', async () => {
     const dataLogIN = await rtaLogIn.json();
 
     const formData = new FormData();
-
-    const token = dataLogIN.token
+    const token = dataLogIN.userData.token
     let ID = APIdata.id
+    
     formData.append('profilePhoto', PhotoFile, 'profile.png');
 
     const PhotoUrl = `http://localhost:3000/api/v1/users/upload-profilephoto/${ID}`;
@@ -128,7 +136,7 @@ createBT.addEventListener('click', async () => {
         body: formData,
     });
 
-    localStorage.setItem('token', token);
+    localStorage.setItem('userData', JSON.stringify(dataLogIN.userData));
     window.location.href='/src/home/'
 })
 

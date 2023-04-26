@@ -28,6 +28,11 @@ const UserSchema = {
     type: DataTypes.STRING,
     defaultValue: undefined,
   },
+  hexaColor: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: undefined,
+  },
   lastname: {
     allowNull: false,
     type: DataTypes.STRING,
