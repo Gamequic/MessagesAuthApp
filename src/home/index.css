@@ -85,6 +85,14 @@ img{
     margin-top: 20px;
 }
 
+#chat {
+    display: none;
+}
+
+#no_chat {
+    display: none;
+}
+
 .chat{
     width: 100%;
     margin-top: auto;
@@ -97,6 +105,7 @@ img{
 
 .messages-container{
     overflow: auto;
+    height: 70vh;
 }
 
 .messages{
@@ -107,6 +116,7 @@ img{
 
 .messages li{
     display: flex;
+    margin-top: 10px;
 }
 
 .Date{

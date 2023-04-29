@@ -3,12 +3,10 @@ const nameP = document.getElementById('name')
 const profilePhoto = document.getElementById('profilePhoto')
 const sendMessageBT = document.getElementById('sendMessageBT');
 const inputMessage = document.getElementById('inputMessage');
+const chat = document.getElementById('chat');
+const noChat = document.getElementById('no_chat');
 
 const messagesContainer = document.getElementsByClassName('messages-container')
-
-console.log(messagesContainer)
-
-//const 
 
 const userData = JSON.parse(localStorage.getItem('userData'));
 const url = 'http://localhost:3000/api/v1/';
@@ -39,11 +37,52 @@ async function main() {
 }
 main();
 
+async function getMessages(id) {
+    const data = {
+        method: 'GET',
+        headers: {
+            'authheader': userData.token
+        },
+    }
+
+    const rta = await fetch(url + `messages/chat/${id}`, data);
+    const dataRta = await rta.json()
+    return dataRta
+}
+
 var currentChatID = undefined;
+noChat.style.display = 'block'
 function setCurrentChat(caller){
-    currentChatID = caller.getAttribute('id');
+    try{
+        currentChatID = caller.getAttribute('id');
+    } catch {
+        currentChatID = caller
+    }
 
+    noChat.style.display = 'none';
+    chat.style.display = 'block';
 
+    var innerHTML = ''
+
+    getMessages(currentChatID).then((messages) => {
+        innerHTML = '<ul class="messages">'
+
+        for (let i in messages){
+            const dateObjet = new Date(messages[i].createdAt);
+            //Diferenciaciones de dias
+
+            //Poner mensajes en el chat
+            if (messages[i].senderId === userData.id){
+                var messageClass = "me";
+            } else {
+                var messageClass = "other";
+            }
+            innerHTML = innerHTML + `<li class="Message ${messageClass}"><p>${messages[i].content}</p><p class="time">${dateObjet.toLocaleDateString('es-ES')} ${dateObjet.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</p></li>`;
+        }
+
+        innerHTML + "</ul>";
+        messagesContainer[0].innerHTML = innerHTML;
+    });
 }
 
 sendMessageBT.addEventListener('click', async () => {
@@ -67,16 +106,11 @@ sendMessageBT.addEventListener('click', async () => {
         },
         body: JSON.stringify(data)
     });
+    inputMessage.value = "";
 })
 
-async function getMessages(id) {
-    const data = {
-        method: 'GET',
-        headers: {
-            'authheader': userData.token
-        },
+setInterval(() => {
+    if (currentChatID) {
+        setCurrentChat(currentChatID)
     }
-
-    const rta = await fetch(url + `messages/chat/${id}`, data);
-    const dataRta = await rta.json()
-}
+}, 500)
