@@ -25,7 +25,7 @@ app.use(fileUpload({
 }))
 
 const corsOptions = {
-  origin: ['http://192.168.1.78/src/login/']
+  origin: ['http://192.168.1.78/']
 }
 
 app.get('/', (req, res) => {
