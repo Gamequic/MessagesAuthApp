@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const boom = require('@hapi/boom');
+const boom = require('boom');
 const CryptoJS = require('crypto-js')
 
 const UserService = require('../services/user.service')
