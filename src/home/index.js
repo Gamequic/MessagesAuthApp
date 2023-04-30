@@ -8,10 +8,16 @@ const noChat = document.getElementById('no_chat');
 
 const messagesContainer = document.getElementsByClassName('messages-container')
 
-const userData = JSON.parse(localStorage.getItem('userData'));
-const url = 'http://localhost:3000/api/v1/';
+const url = 'http://192.168.1.78:3000/api/v1/';
 
 async function main() {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData) {
+        window.location.href = '/src/login';
+        return;
+    }
+
     const rta = await fetch(url + "users/", {
         method: 'GET',
         headers: {

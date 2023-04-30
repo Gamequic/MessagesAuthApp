@@ -4,7 +4,7 @@ const passwordConfirmInput = document.getElementById('password-confirm');
 const updatePasswordBT = document.getElementById('updatePasswordBT');
 const info = document.getElementById('info')
 
-const URLAPI = 'http://localhost:3000/api/v1/users/resetpassword';
+const URLAPI = 'http://192.168.1.78:3000/api/v1/users/resetpassword';
 
 const tokenURL = new URL(window.location.href);
 const token = tokenURL.searchParams.get('token');

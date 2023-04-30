@@ -13,7 +13,7 @@ const createBT = document.getElementById('createBT')
 const colorSelector = document.getElementById('color-selector')
 const info = document.getElementById('info')
 
-const url = 'http://localhost:3000/api/v1/users'
+const url = 'http://192.168.1.78:3000/api/v1/users'
 
 showPasswordButton.addEventListener('click', function() {
     if (passwordInput.type === 'password') {

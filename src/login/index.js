@@ -4,7 +4,7 @@ const LogInBT = document.getElementById('LogInBT');
 const emailInput = document.getElementById('emailInput');
 const info = document.getElementById('info')
 
-const url = 'http://localhost:3000/api/v1/users/login'
+const url = 'http://192.168.1.78:3000/api/v1/users/login'
 
 emailInput.value = 'demiancalleros0@gmail.com'
 passwordInput.value = '123456789'
