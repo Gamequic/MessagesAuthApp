@@ -8,7 +8,7 @@ function routerApi(app, corsOptions) {
   const router = express.Router();
   app.use('/api/v1', router);
 
-  router.use(cors(corsOptions))
+  router.use(cors())
 
   router.use('/users', auth);
   router.use('/messages', msg)
