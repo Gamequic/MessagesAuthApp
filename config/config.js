@@ -10,7 +10,8 @@ const config = {
   messageSecret: process.env.MESSAGESECRET,
   emailService: process.env.EMAILSERVICE,
   email: process.env.EMAIL,
-  emailpassword: process.env.EMAILPASSWORD
+  emailpassword: process.env.EMAILPASSWORD,
+  ipAddress: process.env.IPADDRESS
 }
 
 module.exports = { config };

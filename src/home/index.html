@@ -55,9 +55,10 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="send"></div>
-                    <input id="inputMessage">
-                    <button id="sendMessageBT" class="style-button">Send message</button>
+                    <div class="send">
+                        <input id="inputMessage" onkeydown="if(event.keyCode === 13){postMessage()}">
+                        <button id="sendMessageBT"></button>
+                    </div>
                 </div>
                 <div id="no_chat">
                     <p>No chat selected</p>

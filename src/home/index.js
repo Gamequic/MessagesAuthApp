@@ -85,7 +85,7 @@ function setCurrentChat(caller){
     });
 }
 
-sendMessageBT.addEventListener('click', async () => {
+async function postMessage(){
     const message = inputMessage.value;
 
     if (currentChatID === undefined || message === ''){     //No esta seleccionado un chat o no hay mensaje
@@ -107,7 +107,10 @@ sendMessageBT.addEventListener('click', async () => {
         body: JSON.stringify(data)
     });
     inputMessage.value = "";
-})
+}
+
+
+sendMessageBT.addEventListener('click', postMessage)
 
 setInterval(() => {
     if (currentChatID) {

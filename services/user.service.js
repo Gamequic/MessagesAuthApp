@@ -82,7 +82,7 @@ class UserService {
 
     //Aplicar la foto al usuario
     return await this.update(id, {
-      photo: `http://localhost:3000/public/profilePhoto${id}.png`
+      photo: `http://${config.ipAddress}/public/profilePhoto${id}.png`
     })
   }
 
