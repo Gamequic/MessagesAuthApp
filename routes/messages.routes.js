@@ -1,5 +1,4 @@
 const express = require('express');
-const boom = require('@hapi/boom')
 
 const validationHandler = require('../middlewares/validator.handler');
 const { sendMessage, getMessages, getMessage, getMessageParams } = require('../schemas/messages.schema');
