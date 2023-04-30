@@ -1,4 +1,4 @@
-const boom = require('@hapi/boom');
+const boom = require('boom');
 const bcrypt = require('bcrypt')
 const nodemailer = require("nodemailer");
 const jwt = require('jsonwebtoken');
