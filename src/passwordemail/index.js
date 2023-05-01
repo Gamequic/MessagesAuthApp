@@ -2,7 +2,7 @@ const inputEmail = document.getElementById('email')
 const sendMailbt = document.getElementById('sendMailbt')
 const info = document.getElementById("info")
 
-const url = "http://192.168.1.78:3000/api/v1/users/askresetpassword"
+const url = `http://${globals.apiAddress}/api/v1/users/askresetpassword`
 
 inputEmail.value = 'demiancalleros0@gmail.com';
 

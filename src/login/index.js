@@ -4,10 +4,10 @@ const LogInBT = document.getElementById('LogInBT');
 const emailInput = document.getElementById('emailInput');
 const info = document.getElementById('info')
 
-const url = 'http://192.168.1.78:3000/api/v1/users/login'
+const url = `http://${globals.apiAddress}/api/v1/users/login`
 
 emailInput.value = 'demiancalleros0@gmail.com'
-passwordInput.value = '123456789'
+passwordInput.value = '12345678'
 
 LogInBT.addEventListener('click', async () => {
     email = emailInput.value;
@@ -30,7 +30,8 @@ LogInBT.addEventListener('click', async () => {
     }
 
     localStorage.setItem('userData', JSON.stringify(data.userData));
-    window.location.href='/src/home/'
+   console.log(data.UserData);
+	// window.location.href='/src/home/'
 })
 
 showPasswordButton.addEventListener('click', function() {

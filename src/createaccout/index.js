@@ -13,7 +13,7 @@ const createBT = document.getElementById('createBT')
 const colorSelector = document.getElementById('color-selector')
 const info = document.getElementById('info')
 
-const url = 'http://192.168.1.78:3000/api/v1/users'
+const url = `http://${globals.apiAddress}/api/v1/users`
 
 showPasswordButton.addEventListener('click', function() {
     if (passwordInput.type === 'password') {
@@ -108,7 +108,7 @@ createBT.addEventListener('click', async () => {
     }
 
     //Primer LogIn
-    rtaLogIn = await fetch('http://localhost:3000/api/v1/users/login', {
+    rtaLogIn = await fetch(url + '/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -126,7 +126,7 @@ createBT.addEventListener('click', async () => {
     
     formData.append('profilePhoto', PhotoFile, 'profile.png');
 
-    const PhotoUrl = `http://localhost:3000/api/v1/users/upload-profilephoto/${ID}`;
+    const PhotoUrl = url + `/upload-profilephoto/${ID}`;
 
     fetch(PhotoUrl, {
         method: 'POST',
