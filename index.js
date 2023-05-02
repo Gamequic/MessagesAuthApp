@@ -41,6 +41,8 @@ app.use(errorHandler);
 
 app.use("/public", express.static(path.join(__dirname, 'public')));
 
+app.use("/src", express.static(path.join(__dirname, 'src')));
+
 // const appHTTPS = https.createServer(options, app);
 
 app.listen(port, () => {
