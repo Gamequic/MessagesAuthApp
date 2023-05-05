@@ -68,12 +68,9 @@ class UserService {
     if (!photo) {
       throw boom.badRequest('No files were uploaded.')
     }
-    if (!(photo.name.substring(photo.name.length - 4) === '.png')) {
-      throw boom.badRequest('Only png files.')
-    }
     
     //Mover la foto a la carpeta publica
-    const path = __dirname + "/../public/" + `profilePhoto${id}.png`;
+    const path = __dirname + "/../public/" + `profilePhoto${id}`;
     photo.mv(path, (err) => {
       if (err) {
         throw boom.internal(err)
@@ -82,7 +79,7 @@ class UserService {
 
     //Aplicar la foto al usuario
     return await this.update(id, {
-      photo: `http://${config.ipAddress}/public/profilePhoto${id}.png`
+      photo: `http://${config.ipAddress}/public/profilePhoto${id}`
     })
   }
 

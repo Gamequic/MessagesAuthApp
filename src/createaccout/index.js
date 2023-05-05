@@ -44,8 +44,8 @@ fileInput.addEventListener('change', () => {
 
     PhotoFile = fileInput.files[0];
 
-    if (!PhotoFile.name.endsWith('.png')) {
-        info.textContent = 'Only PNG files.'
+    if (!PhotoFile.name.endsWith('.png') && !PhotoFile.name.endsWith('.jpg')) {
+        info.textContent = 'Only PNG or JPG files.'
         return;
     }
 
@@ -79,7 +79,11 @@ createBT.addEventListener('click', async () => {
 
     if (!(password === passwordConfirm)){
         info.textContent = 'Passwords do not match.';
-        return 0
+        return;
+    }
+    if(!(password.length === 8)){
+        info.textContent = 'The password must be a minimum of 8 characters.';
+        return;
     }
 
     const data = {
@@ -102,9 +106,9 @@ createBT.addEventListener('click', async () => {
 
     const APIdata = await rta.json();
 
-    if (APIdata.statusCode === 409){
-        info.textContent = APIdata.errors[0].message
-        return 0;
+    if (APIdata.statusCode === 409 || APIdata.statusCode === 400){
+        info.textContent = APIdata.errors[0].message;
+        return;
     }
 
     //Primer LogIn
@@ -124,11 +128,11 @@ createBT.addEventListener('click', async () => {
     const token = dataLogIN.userData.token
     let ID = APIdata.id
     
-    formData.append('profilePhoto', PhotoFile, 'profile.png');
+    formData.append('profilePhoto', PhotoFile, 'profile');
 
     const PhotoUrl = url + `/upload-profilephoto/${ID}`;
 
-    fetch(PhotoUrl, {
+    const rtaPhoto = await fetch(PhotoUrl, {
         method: 'POST',
         headers: {
             authHeader: token,
@@ -136,7 +140,9 @@ createBT.addEventListener('click', async () => {
         body: formData,
     });
 
-    localStorage.setItem('userData', JSON.stringify(dataLogIN.userData));
-    window.location.href='/src/login/'
+    const userWithPhoto = await rtaPhoto.json()
+
+    localStorage.setItem('userData', JSON.stringify(userWithPhoto));
+    window.location.href='/src/home/'
 })
 
