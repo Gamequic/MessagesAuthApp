@@ -58,11 +58,11 @@ fileInput.addEventListener('change', () => {
     reader.readAsDataURL(PhotoFile);
 });
 
-usernameInput.value = "Fresa"
-nameInput.value = 'Alexa'
-lastnameInput.value = 'Delgado'
-descricionInput.value = "Soy muy nuv"
-emailInput.value = 'alexadelgado1345@gmail.com'
+usernameInput.value = "Gamequic"
+nameInput.value = 'Demian'
+lastnameInput.value = 'Calleros'
+descricionInput.value = "Soy muy pro"
+emailInput.value = 'demiancalleros0@gmail.com'
 passwordInput.value = '12345678'
 passwordConfirmInput.value = '12345678'
 
@@ -137,6 +137,6 @@ createBT.addEventListener('click', async () => {
     });
 
     localStorage.setItem('userData', JSON.stringify(dataLogIN.userData));
-    window.location.href='/src/home/'
+    window.location.href='/src/login/'
 })
 

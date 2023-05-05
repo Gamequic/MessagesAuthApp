@@ -24,14 +24,15 @@ LogInBT.addEventListener('click', async () => {
     })
     const data = await rta.json();
 
-    if (data.statusCode === 401){   //Unauthorized
+    console.log(data);
+
+    if (data.statusCode === 404 || data.statusCode === 401){   //User not found, Unauthorized
         info.textContent = 'No account was found'
         return
     }
 
     localStorage.setItem('userData', JSON.stringify(data.userData));
-   console.log(data.UserData);
-	// window.location.href='/src/home/'
+    window.location.href='/src/home/';
 })
 
 showPasswordButton.addEventListener('click', function() {

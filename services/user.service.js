@@ -135,7 +135,7 @@ class UserService {
       to: email,
       subject: "Password reset",
       text: ``,
-      html: `<a href='http://127.0.0.1:5500/src/passwordreset/?token=${token}'>Recover password<a>`, 
+      html: `<a href='http://${config.ipAddress}/src/passwordreset/?token=${token}'>Recover password<a>`, 
     });
 
     return "Email sent"

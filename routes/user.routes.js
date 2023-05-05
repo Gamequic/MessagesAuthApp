@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require("path");
-const boom = require('@hapi/boom')
+const boom = require('boom')
 
 const validationHandler = require('../middlewares/validator.handler');
 const { createUserSchema, updateUserSchema, getUserSchema, askPasswordReset, applyPasswordReset, login } = require('../schemas/user.schema');

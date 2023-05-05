@@ -8,12 +8,12 @@ const noChat = document.getElementById('no_chat');
 
 const messagesContainer = document.getElementsByClassName('messages-container')
 
-var userData = JSON.parse(localStorage.getItem('useData'));
+var userData = JSON.parse(localStorage.getItem('userData'));
 const url = `http://${globals.apiAddress}/api/v1/`;
 console.log(userData);
 async function main() {
     if (!userData) {
-	window.location.href = '/src/login';
+	//window.location.href = '/src/login';
         return;
     }
 
@@ -40,6 +40,7 @@ async function main() {
     profilePhoto.src = userData.photo;
     profilePhoto.style.border = `3px solid ${userData.hexaColor}`;
 }
+
 main();
 
 async function getMessages(id) {

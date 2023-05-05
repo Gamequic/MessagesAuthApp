@@ -1,5 +1,7 @@
 const { Model, DataTypes, Sequelize } = require('sequelize');
 
+const config = require('./../../config/config')
+
 const USER_TABLE = 'users';
 
 const UserSchema = {
@@ -52,7 +54,7 @@ const UserSchema = {
   photo: {
     allowNull: true,
     type: DataTypes.STRING,
-    defaultValue: "http://localhost:3000/public/user-default.svg"
+    defaultValue: `http://${config.ipAddress}/public/user-default.svg`
   },
   role: {
     allowNull: true,
