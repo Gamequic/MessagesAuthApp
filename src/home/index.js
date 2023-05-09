@@ -8,18 +8,15 @@ const noChat = document.getElementById('no_chat');
 
 const messagesContainer = document.getElementsByClassName('messages-container')
 
+try{
+    var userData = JSON.parse(localStorage.getItem('userData'));
+} catch {
+    window.location.href = '/src/login';
+}
+
 const url = `http://${globals.apiAddress}/api/v1/`;
 
 async function main() {
-    try{
-        var userData = await JSON.parse(localStorage.getItem('userData'));
-    } catch {
-        window.location.href = '/src/login';
-        return
-    }
-
-    console.log(userData)
-
     if (!userData) {
         window.location.href = '/src/login';
         return;
@@ -106,7 +103,6 @@ async function postMessage(){
     const message = inputMessage.value;
 
     if (currentChatID === undefined || message === ''){     //No esta seleccionado un chat o no hay mensaje
-        console.log("Not message or chat");
         return
     }
 
