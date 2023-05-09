@@ -1,0 +1,3 @@
+const globals = {
+	apiAddress: 'localhost:3000'
+}

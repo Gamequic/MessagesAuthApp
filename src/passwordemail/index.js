@@ -12,7 +12,7 @@ sendMailbt.addEventListener('click', async () => {
     sendMailbt.disabled = true;
 
     info.textContent = 'Sending mail'
-    setInterval(() => {
+    const Interval = setInterval(() => {
         if (info.textContent === 'Sending mail...'){
             info.textContent = 'Sending mail'
         }
@@ -31,18 +31,20 @@ sendMailbt.addEventListener('click', async () => {
     })
     const data = await rta.json();
 
-    if (data.statusCode === 400) {  //Bad request
+    if (data.statusCode === 400 || data.statusCode === 404) {   //Error
         sendMailbt.classList.remove('loading');
         sendMailbt.disabled = false;
+        clearInterval(Interval)
+    }
+
+    if (data.statusCode === 400) {  //Bad request
         info.textContent = 'Bad request'
-        return 0
+        return
     }
 
     if (data.statusCode === 404) {  //User not found
-        sendMailbt.classList.remove('loading');
-        sendMailbt.disabled = false;
         info.textContent = 'User not found'
-        return 0
+        return
     }
 
     if (data.rta === 'Email sent'){ //Email sent

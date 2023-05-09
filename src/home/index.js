@@ -8,12 +8,20 @@ const noChat = document.getElementById('no_chat');
 
 const messagesContainer = document.getElementsByClassName('messages-container')
 
-var userData = JSON.parse(localStorage.getItem('userData'));
 const url = `http://${globals.apiAddress}/api/v1/`;
-console.log(userData);
+
 async function main() {
+    try{
+        var userData = await JSON.parse(localStorage.getItem('userData'));
+    } catch {
+        window.location.href = '/src/login';
+        return
+    }
+
+    console.log(userData)
+
     if (!userData) {
-	//window.location.href = '/src/login';
+        window.location.href = '/src/login';
         return;
     }
 
@@ -62,20 +70,19 @@ function setCurrentChat(caller){
     try{
         currentChatID = caller.getAttribute('id');
     } catch {
-        currentChatID = caller
+        currentChatID = caller;
     }
 
     noChat.style.display = 'none';
     chat.style.display = 'block';
 
-    var innerHTML = ''
+    var innerHTML = '';
 
     getMessages(currentChatID).then((messages) => {
-        innerHTML = '<ul class="messages">'
+        innerHTML = '<ul class="messages">';
 
         for (let i in messages){
             const dateObjet = new Date(messages[i].createdAt);
-            //Diferenciaciones de dias
 
             //Poner mensajes en el chat
             if (messages[i].senderId === userData.id){
@@ -89,6 +96,10 @@ function setCurrentChat(caller){
         innerHTML + "</ul>";
         messagesContainer[0].innerHTML = innerHTML;
     });
+
+    //Poner el contenedor hasta abajo
+    const messageContainer = document.getElementById("messageContainer");
+    messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
 async function postMessage(){
@@ -114,7 +125,6 @@ async function postMessage(){
     });
     inputMessage.value = "";
 }
-
 
 sendMessageBT.addEventListener('click', postMessage)
 

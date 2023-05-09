@@ -33,6 +33,8 @@ header div img{
 }
 
 .scroll-container {
+    background-color: var(--dark-blue);
+    border-radius: 5px;
     width: 400px;
     margin-right: auto;
     height: 84vh;
@@ -41,7 +43,7 @@ header div img{
 
 .contacts-list li{
     cursor: pointer;
-    background-color: var(--green);
+    background-color: var(--midnight-blue);
     margin: 10px;
     border-radius: 20px;
     width: 200px;
@@ -50,7 +52,7 @@ header div img{
 }
 
 .contacts-list li:hover{
-    background-color: var(--very-light-green);
+    background-color: var(--slate-steel-blue);
 }
 
 img{
@@ -105,7 +107,9 @@ img{
 }
 
 .send input{
-    width: 80vh;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 0px;
 }
 
 .send button{
@@ -119,7 +123,7 @@ img{
 }
 
 .messages-container{
-    overflow: auto;
+    overflow-y: scroll;
     height: 70vh;
 }
 
@@ -151,7 +155,8 @@ img{
 .Message{
     flex: 1;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 10px;
+    margin: 10px;
 }
 
 .time{
@@ -160,11 +165,11 @@ img{
 }
 
 .me{
-    background-color: var(--green);
+    background-color: var(--slate-steel-blue);
     margin-left: auto;
 }
 
 .other{
-    background-color: var(--green);
+    background-color: var(--seagreen);
     margin-right: auto;
 }

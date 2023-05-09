@@ -122,27 +122,28 @@ createBT.addEventListener('click', async () => {
                 password
             })
     })
-    const dataLogIN = await rtaLogIn.json();
+    var dataLogIN = await rtaLogIn.json();
 
-    const formData = new FormData();
-    const token = dataLogIN.userData.token
-    let ID = APIdata.id
-    
-    formData.append('profilePhoto', PhotoFile, 'profile');
+    //Si hay foto la sube
+    if (PhotoFile){
+        const formData = new FormData();
+        
+        await formData.append('profilePhoto', PhotoFile, 'profile');
 
-    const PhotoUrl = url + `/upload-profilephoto/${ID}`;
+        const PhotoUrl = url + `/upload-profilephoto/${dataLogIN.userData.id}`;
 
-    const rtaPhoto = await fetch(PhotoUrl, {
-        method: 'POST',
-        headers: {
-            authHeader: token,
-        },
-        body: formData,
-    });
+        const rtaPhoto = await fetch(PhotoUrl, {
+            method: 'POST',
+            headers: {
+                authHeader: dataLogIN.userData.token,
+            },
+            body: formData,
+        });
 
-    const userWithPhoto = await rtaPhoto.json()
+        dataLogIN = await rtaPhoto.json()
+    }
 
-    localStorage.setItem('userData', JSON.stringify(userWithPhoto));
+    await localStorage.setItem('userData', JSON.stringify(dataLogIN.userData));
     window.location.href='/src/home/'
 })
 

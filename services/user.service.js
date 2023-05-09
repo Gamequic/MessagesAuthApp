@@ -64,7 +64,7 @@ class UserService {
     const user = await this.findOne(id);
     delete user.dataValues.password;
     
-    //Confirmar foto y formato
+    //Confirmar foto
     if (!photo) {
       throw boom.badRequest('No files were uploaded.')
     }

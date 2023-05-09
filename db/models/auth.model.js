@@ -54,7 +54,7 @@ const UserSchema = {
   photo: {
     allowNull: true,
     type: DataTypes.STRING,
-    defaultValue: `http://${config.ipAddress}/public/user-default.svg`
+    defaultValue: `http://${config.config.ipAddress}/public/user-default.svg`
   },
   role: {
     allowNull: true,
