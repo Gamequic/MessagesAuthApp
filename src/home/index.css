@@ -99,28 +99,38 @@ img{
 .chat{
     width: 100%;
     margin-top: auto;
-    height: 84vh;
 }
 
-.send{
+.send {
     display: flex;
-}
-
-.send input{
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    margin-top: auto;
-    margin-bottom: 0px;
+    padding-bottom: 10px;
 }
 
-.send button{
-    width: 50px;
+.send input {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.send button {
+    width: auto;
+    min-width: 50px;
     height: 50px;
-    background-color: rgba(240, 248, 255, 0);
+    background-color: var(--slate-steel-blue);
     border: none;
     cursor: pointer;
     background-image: url('./../icons/send.svg');
     background-size: 50px;
+    margin-right: 10px;
+    border-radius: 10px;
 }
+  
 
 .messages-container{
     overflow-y: scroll;

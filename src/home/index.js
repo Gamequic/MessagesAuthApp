@@ -111,6 +111,10 @@ async function postMessage(){
         "content": message
     }
 
+    inputMessage.value = "";
+    inputMessage.disabled = true;
+    inputMessage.placeholder = "Sending..."
+
     const rta = await fetch(url + 'messages/', {
         method: 'POST',
         headers: {
@@ -119,7 +123,9 @@ async function postMessage(){
         },
         body: JSON.stringify(data)
     });
-    inputMessage.value = "";
+
+    inputMessage.disabled = false;
+    inputMessage.placeholder = "Send a message."
 }
 
 sendMessageBT.addEventListener('click', postMessage)

@@ -89,7 +89,7 @@ header{
 }
 
 input{
-    background-color: var(--slate-steel-blue);
+    background-color: var(--steel-blue);
     color: var(--white);
     border-radius: 20px;
     font-size: var(--lg);
@@ -99,6 +99,15 @@ input{
     font-family: 'Comfortaa', cursive;
     font-family: 'Quicksand', sans-serif;
     text-align: center;
+}
+
+input::placeholder{
+    color: var(--light-gray);
+}
+
+input:disabled{
+    background-color: var(--slate-steel-blue);
+    cursor: not-allowed;
 }
 
 input:focus{
